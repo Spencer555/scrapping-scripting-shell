@@ -1,0 +1,57 @@
+pip install scrapy 
+scrapy startproject projectname
+cd into it 
+scrapy tutorials 
+
+ 
+start spider 
+scrapy genspider example example.com
+
+
+to run 
+scrapy crawl posts
+
+
+dealing with shell
+
+scrapy shell domainname or url u-want-to-crawl
+
+using css selectors on response obj 
+
+response.css('title') # get the entire data with tags and related data 
+response.css('title').get() #get value of data with title tag
+response.css('title::text').get() #get value of data without title tag
+response.css('h3::text').get() #get us the first h3
+response.css('h3::text')[1].get() #get us the second h3 can get third fourth ect based on value inputed in square brackets
+response.css('h3::text')getall() #get all h3 texts
+
+
+#get paragraph text all instances of word scrapping
+the re is using regular exp 
+response.css('p::text').re(r'scraping')
+
+
+using xpath this is what is happening behind the scence when u use css selectors here 
+
+#to get all h3 
+response.xpath('//h3')
+
+#to get just the text 
+response.xpath('//h3/text()').extract()
+response.xpath('//h3/text()').getall()
+
+
+post = response.css('div.post-item')[0]
+#get the first post based on the class 
+
+to get values  
+title = post.css('.post-header h2 a::text')[0].get()
+use same for other values
+
+#to loop 
+
+for post in response.css('div.post-item'):
+  title = post.css('.post-header h2 a::text')[0].get()
+  date = post.css('.post-header a::text').get()
+  author = post.css('.post-header a::text')[2].get()
+  print(dict(title=title, data=date, author=author))

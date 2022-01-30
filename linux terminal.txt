@@ -1,0 +1,381 @@
+pwd- present working directory
+cd  - change directory
+ls finding hidden folders with ls - list files and folder
+mkdir rmdir - make and remove directory
+cp rm mv locate - copy remove moving and locate files
+updatedb - updates database to make it easier looking for files files
+passwd - change password
+man
+
+
+cd to go up a folder u are not in  cd / press tab to se the folders up the tree cd /ete/ double tab to see files in that folder of ls /ete/
+
+
+instead of cd root/desktop/music/   cd ~/music/ used in root folders 
+
+
+cd D presed tab not working double tab to see contents
+
+
+
+ls -la looks for hidden folders
+
+
+
+man and command to show how to use the command e.g. man ls
+
+
+
+
+
+second session 
+
+overview 
+chmod - change mode this l.ets us change permissions on a file or direcotry
+adduser
+/etc/passwd, /etc/shadow - etc passwd what users are on the machine etc shadow passwords stored in hashes
+su - switch user
+sudo - elevate user 
+
+
+
+
+directories 
+
+-rw-----  when we se a hyphen first it is a file
+drwx--- when we se a d first it is a direcotry the rwx is the permission settings read wirte and exeute
+
+drwxr-x-xr-x the direcotry has 3 groups the first is the owner had rwx second is the members of the group xr and third all users can only x
+
+chmod is used to change perm e.g.. chmod +x(name of permision execute is x) helo.txt or chmod 777 hello.txt to give full access
+
+in pent testing we look for files with read write execute to be able to modify for our benefits
+
+adduser - adduser spencer to add user spencer
+
+
+cat /etc/passwd  - to show list of users 
+
+cat /etc/shadow
+
+su prince - switch user to prince
+
+
+passwd prince - change prince password
+
+
+
+
+third session
+
+common networking commands
+
+ifconfig - show iur interface types and ip associated with them and inet netmask and broadcast and lo address associated with them
+iwconfig - wireless adapter version
+ping -  ping to see if a machine is alive and responding to us e.g. ping 192.168.15.1 
+arp - mask ip address and mac addreses the arp -a ip address it talks to and ip and mac address associiated with it
+netstat - command line tool to display connection and listening port thiis shows the  netstat -ano shows active connection running on the machine
+route - display our routing table and tells us where our trafic exit
+
+fourth session 
+view create and edit files
+echo - echos wat u type  echo “fdsf” or to wirite to a text echo '"fdsf" > new.txt
+cat - print out a doc 
+replace vs appending (> vs >>) echo “fdsf” > dsfs.txt for replacing and echo ‘fdsf’ >> sdsdf.txt to append
+touch create a file touch new.txt
+nano text editor for terminal nano new.txt u can use vi or vim
+gedit gui text editor  gedit new.txt
+
+fourth session 
+
+starting and stopping services
+
+services -   deals with services start or stop services dbase webserver or ssh e.g. service apache2 start or stop. service nameofservice start or stop
+systemctl - allows us to enable or disable on boot  systemctl enable postgresql to make postgresql start on boot
+
+spin up a python webserver : python -m SimpleHTTPServer and add the port num to local web address to upload it gui
+
+
+fifth session
+
+updating and installing tools
+installing updates with apt-get
+intalling tools with apt-get 
+using git
+
+
+to update and upgrade system 
+apt-get update && apt-get upgrade - look thorugh packages and check for update upgrade to the system
+
+
+to install 
+apt-get install appname 
+
+
+to accept yes on all 
+apt-get install appname -y
+
+
+to install from git
+git clone  link
+see install instructions from git or use apt get to install if it is available
+
+
+
+last lesson 
+scripting with bash
+
+grep - allows us to narow down resuls 
+to filter with grep we use pipe  to add the command  
+cat ip.txt | grep “64 bytes” 
+this is to get all lines with 64 bytes
+| this symbol is to add a new command
+
+cut - same
+cat ip.txt | grep “64 bytes”  | cut -d “ ”  -f  4
+
+-d is a delimiter this is what we are going to be cutting on 
+-f is field in this we specified field four in this case seprated by the space the ip address is the fourth field
+64 bytes from 10.0.2.15: icmp_seq=1 ttl=64 time=0.025 ms
+
+
+tr - same
+cat ip.txt | grep "64 bytes" | cut -d " " -f 4 | tr -d ":"
+tr is to remove in this case the colon : is what is removed and -d is delimeter
+
+script writing
+for loops
+
+scripting in file called ipsweep.sh
+#!/bin/bash - this declares the type wheather python or bash
+ 
+ 
+if [ '$1' == ' '] --if statement runs when ip address is none
+then
+echo "You forgot an IP address!"
+echo "Syntax: ./ipsweep.sh 192.168.1"
+
+else
+for ip in `seq 1 254` ; do  -- for this in 1 to 254 do something
+ping -c 1 $1.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" &    -- the dollar sign is  userinput in this the ip  the and sign is for threading else u have to replace with semi colon
+done
+
+fi --this is end if
+
+
+to run it type 
+./ipsweep.sh
+
+to add the ip address swept to list
+./ipsweep.sh 192.168..1 > iplist.txt
+
+send packets to ping
+ping ipaddress -c 1 e.g. number is the number of packets u want in this case 1
+if respose u 64bytes if no response 0bytes
+
+
+
+
+
+
+
+#!/bin/bash 
+if [ '$1' == '' ]
+then
+echo "You forgot an IP address!"
+echo "Syntax: ./ipsweep.sh 192.168.1"
+
+else
+for ip in `seq 1 10` ; do
+ping -c 1 $1 | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" &
+done
+fi
+
+
+using for loop oneliners
+for ip in $(cat iplist.txt); do nmap -sS -p 80 -T4 $ip & done
+for loop in ip list do nmap -sS is stealth speed -p port -T4 is speed
+
+
+
+
+whoami - tell u the current user logedin 
+date - tells u date
+history - list of previous executed commands 
+
+cp 1.txt 2.txt - copy contents of 1.txt to 2.txt
+
+mv 1.txt 2.txt - move contents of 1.txt to 2.txt
+
+to set variable local variable= hello=90
+to make global variable - export hello
+echo $hello - to print value 
+
+
+unset hello - to remove value already set
+
+chmod u-x 1.txt = to remove permissions 
+why we had to use 777 in chmod 4 means read 2 write permission 1 means execute permission
+thats why its 7
+
+chown is to change ownership 
+chown username 1.txt - change ownership of file for user
+chown spl 1.txt
+
+
+chgrp groupname filename - change ownership of file for group 
+
+
+chown username:groupname filename both user and group at the same time
+
+
+to change for user group others
+chmod u+x filename 
+chmod g-x filename 
+chmod o-x filename
+
+same as chmod u for username g for group o for others
+
+find groups in  /etc/group/
+create group - groupadd dev
+
+
+display cntent in file 
+head first 10lines
+tail last 10 lines 
+grep search for pattern
+cat entire content is displayed
+
+
+searches a file or dirctory  to show direcotry and subfiles in the directory - find Downloads
+file - shows type of file
+e.g. file Downloads
+
+initalizing a process 
+in the background and fore ground  
+when run by default is in the foreground 
+to make it bakground 
+pwd & 
+
+
+
+ps - lists outs all running process 
+ps- aux   =list out all the running processes for all users
+ps -u username = show all processes under user
+
+the 5 process in linux
+
+initializing a process
+tracking a process
+stopping a process
+other processes
+
+
+ps data 
+
+uid user id or id of the useer running the process
+pid process id 
+ppid parent process id 
+c cpu utilization of process
+tty terminal type associated with the process
+time cpu time taken by the process 
+cmd th command that started this process
+
+
+
+stop a process
+
+to stop a foreground app  = ctrl + c 
+to stop a background app = kill[term sig][pid]
+
+kill -9 12322 = to kill the app -9 is terminate the process
+
+
+
+kill -l shows all signals in the linux
+
+
+other processes 
+top  = to see all the running processes within the working env of liinux
+
+nice [-nice value] [process]=to start a process and assign its priority value (nice value) at the same time 
+nice values range from -20 to 19 where -20 is the highest
+
+e.g. nice --19 cat for a negetive value and nice -19 cat = the fiirst is priority level -19 and other is priority 19 
+
+
+renice [-nice vlaue] [processi id] to change the priority of a process
+
+e.g. renice -3 11988
+
+
+df = used to list the amount of available and used disk space by a file system
+
+
+
+
+python script
+a fuzzing script
+
+#!/usr/bin/python 
+import sys, socket
+from time import sleep
+
+buffer = "A" * 100   - just a string of a hundred a's
+
+while True:
+          try:
+              s= socket.socket(socket.AF_INET, socket.SOCK_STREAM) - send a connection
+              s.connect(('192.168.1.1', 9999)) - ipv4address, and port 
+              s.send(('TRUN /.:/' + buffer)) - sending the Trun message plus 100 a
+              s.close()
+              sleep(1) -sleep for a second
+              buffer= buffer + 'A'*100
+           except: 
+                 print 'Fuzzing crashed at %s bytes' %(str(len(buffer))
+                 sys.exit()
+
+
+
+a ping sweeper script
+
+import subprocess
+import datetime 
+import re 
+import argparse
+
+def write_result(filename, ping):
+ with open(filename, 'w') as f:
+  f.write(f"Start time {datetime.datetime.now()}")
+  for result in ping:
+   f.write(result) 
+  f.write(f'End time {datetime.datetime.now()})
+
+
+def ping_subnet(subnet): - for add in range ping with the info
+ for addr in  range(1, 255):
+   yeild subprocess.Popen(["ping", f"{subnet}.{addr}", "-n", "1"], stdout=subprocess.PIPE) \
+     .stdout.read()                                                                         \
+     .decode() 
+
+
+def main(subnet, filename): - main function 
+   write_result(filename, ping_subnet(subnet)) 
+
+def parse_arguments(): -arge parse is for pasing argumens
+ parser = argparse.ArgumentParser(usage='%(prog)s [options] <subnet>', description='ip checker'
+                                           epilog='python ipscanner.py  192.168.1 -f somefile.txt")
+ parser.add_argument('subnet', type=str, help='the subnet you want to ping')
+ parser.add_argument('-f', '--filename', type=str, help='The filename')
+ args = parser.parse_args()
+ 
+ if not re.match(r"(\d(1,3}\. \d{1,3}\. \d{1,3})", args.subnet \
+    or any(a not in range(1, 255) for a in map(int, args.subnet.split("."))):
+
+ if " " in args.filename:
+      parse.error("This is not a valid subnet") 
+ 
+ if __name__== '__main__': - just a safety measure
+     main('parse_arguments())
+
+

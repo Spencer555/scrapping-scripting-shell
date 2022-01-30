@@ -1,0 +1,25 @@
+scrapping 
+uses 
+market research
+socail media
+etc 
+
+scrapping is legal as long u are not changing anything on the parent site or over access of websiteor play with the securiy mechanisms
+
+web scrapping is pulling data from the website and storing the usefull data to local storage such as 
+dbase xml or csv
+  
+
+steps in web scrapping
+
+document load e.g html page
+pharsing - interprate the document to make it posible to scrape 
+extraction - extraction of the data name, price, etc
+transformation - converting the data into usefull format 
+
+
+beautiful soup pulls data from html and xml files 
+requests is a library for sending and receiving data over http
+
+
+first visit the page and inspect it in the browser
